@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Pocket Love Tarot</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#160f24">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Love Tarot">
+<!-- ===== CONFIGURAÇÃO =====
+  accessCode: deixe "" para acesso livre pelo link, ou coloque um código (ex.: "AMOR2026")
+  e mande esse código no e-mail de entrega. É uma proteção simples, não um login de verdade. -->
+<script>window.APP_CONFIG = { accessCode: "" };</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#160f24;--bg2:#1f1533;--card:#271b3f;--line:rgba(240,170,200,.18);--ink:#f7eef2;--mut:#bcaec8;--rose:#f0a3c0;--rose2:#d9779c;--gold:#ecc97e;--safe:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 Inter,system-ui,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 15% 0%,rgba(240,163,192,.16),transparent 55%),radial-gradient(ellipse at 100% 40%,rgba(236,201,126,.08),transparent 45%)}
+.serif,h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:700;line-height:1.1}
+em{font-style:italic;color:var(--rose)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.app{max-width:520px;margin:0 auto;min-height:100%;padding:0 16px calc(96px + var(--safe))}
+header{position:sticky;top:0;z-index:5;background:rgba(22,15,36,.92);backdrop-filter:blur(10px);margin:0 -16px;padding:14px 16px 10px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;justify-content:space-between}
+.brand b{font:700 22px/1 "Cormorant Garamond",serif}.brand b em{color:var(--rose)}
+.brand span{font-size:11px;color:var(--mut);letter-spacing:.14em;text-transform:uppercase}
+.sit{display:flex;gap:6px;margin-top:10px}
+.sit button{flex:1;padding:8px 6px;border-radius:999px;border:1px solid var(--line);font-size:12.5px;font-weight:600;color:var(--mut)}
+.sit button.on{background:var(--rose);border-color:var(--rose);color:#2a0f1c}
+h1{font-size:34px;margin:22px 0 6px}h2{font-size:26px;margin:24px 0 10px}
+.sub{color:var(--mut)}
+.box{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:12px}
+.list button.item{width:100%;text-align:left;display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:10px}
+.item .ic{flex:0 0 42px;height:42px;border-radius:12px;background:rgba(240,163,192,.14);display:flex;align-items:center;justify-content:center;color:var(--rose);font-size:20px}
+.item b{display:block}.item small{color:var(--mut)}
+.item .ar{margin-left:auto;color:var(--rose)}
+.btn{display:block;width:100%;padding:16px;border-radius:999px;background:linear-gradient(180deg,#f6b9cf,#e083a6);color:#2a0f1c;font-weight:800;letter-spacing:.03em;text-transform:uppercase;font-size:14px;margin-top:16px;box-shadow:0 10px 26px rgba(240,163,192,.3)}
+.btn.ghost{background:none;border:1px solid var(--rose);color:var(--rose);box-shadow:none}
+/* cartas */
+.table{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:18px}
+.slot{width:96px;text-align:center}
+.slot small{display:block;font-size:11px;color:var(--mut);margin-top:6px;line-height:1.25;min-height:28px}
+.tc{width:96px;height:156px;perspective:800px;cursor:pointer}
+.tc .in{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.tc.flip .in{transform:rotateY(180deg)}
+.tc .f,.tc .b{position:absolute;inset:0;border-radius:12px;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:2px solid var(--gold)}
+.tc .b{background:repeating-linear-gradient(45deg,#3a2552 0 8px,#2f1e45 8px 16px);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:30px}
+.tc .f{transform:rotateY(180deg);background:linear-gradient(160deg,#3b2556,#211634);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:10px 4px;color:var(--gold)}
+.tc .f .n{font:700 20px/1 "Cormorant Garamond",serif}.tc .f .s{font-size:34px;line-height:1}.tc .f .nm{font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#e7d9ef;text-align:center;line-height:1.2}
+.tc.big{width:140px;height:228px;margin:0 auto}.tc.big .f .n{font-size:30px}.tc.big .f .s{font-size:52px}.tc.big .f .nm{font-size:11px}
+.deal .tc{animation:deal .45s both}@keyframes deal{from{opacity:0;transform:translateY(-30px) rotate(-8deg)}}
+.reading{margin-top:18px;display:grid;gap:10px}
+.rd{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;animation:fade .4s both}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}}
+.rd .pos{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);font-weight:700}
+.rd h3{font-size:22px;margin:4px 0 2px}
+.keys{font-size:12px;color:var(--mut)}
+.rd p{margin-top:6px}
+.hint{text-align:center;color:var(--mut);font-size:13px;margin-top:10px}
+textarea,input{width:100%;background:var(--bg2);border:1px solid var(--line);border-radius:12px;color:var(--ink);font:inherit;padding:12px;margin-top:8px}
+textarea{min-height:80px;resize:vertical}
+label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);font-weight:700;display:block;margin-top:12px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.chips button{padding:7px 12px;border-radius:999px;border:1px solid var(--line);font-size:13px}
+.chips button.on{background:var(--gold);color:#241604;border-color:var(--gold)}
+.cl button.cardrow{width:100%;display:flex;gap:12px;align-items:center;text-align:left;padding:10px 4px;border-bottom:1px solid var(--line)}
+.mini{flex:0 0 34px;height:54px;border-radius:6px;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:16px;background:#2f1e45}
+.cardrow small{display:block;color:var(--mut);font-size:12.5px}
+.combo,.qq{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin-top:10px}
+.combo b{color:var(--rose)}
+.qq .no{color:var(--mut);text-decoration:line-through;font-size:13.5px}.qq .yes{font-weight:600;margin-top:4px}
+.entry{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:10px}
+.entry .d{font-size:12px;color:var(--mut)}.entry .del{float:right;color:var(--mut);font-size:12px;text-decoration:underline}
+.entry ul{list-style:none;margin-top:6px;font-size:13.5px}.entry li b{color:var(--rose)}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:6;background:rgba(22,15,36,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:8px 8px calc(8px + var(--safe));display:flex;justify-content:center}
+nav .in{display:flex;max-width:520px;width:100%}
+nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;color:var(--mut);padding:4px}
+nav button i{font-style:normal;font-size:20px}
+nav button.on{color:var(--rose)}
+.modal{position:fixed;inset:0;z-index:10;background:rgba(10,6,18,.75);display:none;align-items:flex-end;justify-content:center}
+.modal.on{display:flex}
+.sheet{background:var(--bg2);border-radius:24px 24px 0 0;width:100%;max-width:520px;max-height:88vh;overflow:auto;padding:20px 18px calc(24px + var(--safe));animation:up .3s}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+.sheet .x{float:right;color:var(--mut);font-size:24px}
+.sitrow{margin-top:12px}.sitrow b{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--rose)}
+.sitrow.cur{background:rgba(240,163,192,.1);border-radius:12px;padding:8px 10px;margin-left:-10px;margin-right:-10px}
+.gate{max-width:420px;margin:18vh auto 0;text-align:center;padding:0 22px}
+.toast{position:fixed;left:50%;bottom:calc(90px + var(--safe));transform:translateX(-50%);background:var(--rose);color:#2a0f1c;font-weight:700;padding:10px 18px;border-radius:999px;font-size:13px;opacity:0;transition:opacity .3s;z-index:20;pointer-events:none}
+.toast.on{opacity:1}
+.foot{text-align:center;color:#8d7f9b;font-size:11.5px;margin-top:30px}
+</style>
+<style>
+.aur{position:fixed;inset:0;z-index:-2;overflow:hidden;background:#100919;pointer-events:none}
+.aur i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;animation:flu 18s ease-in-out infinite alternate}
+.aur i:nth-child(1){width:60vmax;height:60vmax;left:-22vmax;top:-20vmax;background:#5b2a8c}
+.aur i:nth-child(2){width:50vmax;height:50vmax;right:-18vmax;top:12vh;background:#a8336a;animation-duration:22s}
+.aur i:nth-child(3){width:45vmax;height:45vmax;left:8vw;bottom:-25vmax;background:#a8823a;opacity:.28;animation-duration:26s}
+@keyframes flu{to{transform:translate(6vmax,4vmax) scale(1.12)}}@keyframes brilho{0%{left:-60%}60%,100%{left:130%}}
+body{background:transparent!important}body:before{display:none}
+header{background:linear-gradient(180deg,rgba(40,22,60,.6),rgba(22,12,34,.55))!important;-webkit-backdrop-filter:blur(22px) saturate(170%)!important;backdrop-filter:blur(22px) saturate(170%)!important;border-bottom:1px solid rgba(255,255,255,.1)!important}
+.sit button{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)!important}
+.sit button.on{background:linear-gradient(180deg,#f8c6d8,#e083a6)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 16px rgba(240,163,192,.35)}
+.box,.list button.item,.rd,.combo,.qq,.entry,textarea,input,.cl{background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04))!important;-webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);border:1px solid rgba(255,255,255,.12)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 14px 34px rgba(0,0,0,.28)}
+.cl{border-radius:18px;padding:4px 12px;margin-top:12px!important}
+.box,.rd,.entry{border-radius:22px!important}.list button.item{border-radius:20px!important;transition:transform .15s}.list button.item:active{transform:scale(.98)}
+.btn{position:relative;overflow:hidden;background:linear-gradient(180deg,#ffd6e4,#f0a3c0 55%,#d9779c)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.85),inset 0 -2px 6px rgba(140,40,80,.3),0 10px 26px rgba(240,163,192,.38)!important}
+.btn::before{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);animation:brilho 3.4s infinite}
+.btn.ghost{background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.03))!important;color:var(--rose)!important;border:1px solid rgba(240,163,192,.5)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)!important}.btn.ghost::before{display:none}
+.tc .b{background:linear-gradient(160deg,#4a2470,#1b0f2b)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 12px 26px rgba(0,0,0,.5)}
+.tc .b:after{content:"";position:absolute;inset:6px;border-radius:8px;border:1px solid rgba(236,201,126,.35);background:radial-gradient(circle,rgba(240,163,192,.2),transparent 60%)}
+.tc .f{box-shadow:0 12px 26px rgba(0,0,0,.5),0 0 24px rgba(236,201,126,.2)}
+.tc:not(.flip) .in{animation:resp 2.6s ease-in-out infinite}@keyframes resp{50%{transform:translateY(-4px)}}
+nav{left:50%!important;right:auto!important;bottom:14px!important;transform:translateX(-50%);width:min(92vw,480px);border-radius:99px;padding:6px!important;background:linear-gradient(180deg,rgba(40,24,60,.62),rgba(18,10,28,.8))!important;-webkit-backdrop-filter:blur(24px) saturate(180%)!important;backdrop-filter:blur(24px) saturate(180%)!important;border:1px solid rgba(255,255,255,.14)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 16px 40px rgba(0,0,0,.5)}
+nav button{border-radius:99px;padding:6px 4px!important;transition:background .25s}
+nav button.on{background:linear-gradient(180deg,#ffd6e4,#f0a3c0 55%,#d9779c);color:#2a0f1c!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 6px 16px rgba(240,163,192,.35)}
+.app{padding-bottom:calc(110px + var(--safe))!important}
+.sheet{background:linear-gradient(180deg,rgba(48,28,72,.92),rgba(22,14,34,.95))!important;-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.12)}
+.modal{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.chips button{background:rgba(255,255,255,.06)}
+</style>
+</head>
+<body><div class="aur"><i></i><i></i><i></i></div>
+<div id="root"><div class="gate" id="fallback"><div style="font-size:34px;color:#f0a3c0">♥</div><h1>Pocket <em>Love</em> Tarot</h1><p class="sub">Loading…</p><p class="sub" style="margin-top:14px;font-size:13px">If this screen does not change in a few seconds, open the access link in your phone browser (Chrome or Safari). In-app file viewers, like the one in WhatsApp, cannot open the app.</p></div></div>
+<nav id="nav" style="display:none"><div class="in">
+  <button data-go="home" class="on"><i>♥</i>Home</button>
+  <button data-go="spreads"><i>✦</i>Spreads</button>
+  <button data-go="cards"><i>❖</i>Cards</button>
+  <button data-go="diary"><i>✎</i>Journal</button>
+</div></nav>
+<div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+<script>
+const D = {"cards": [{"name": "The Fool", "lbl": "0", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 1 of the Fool's Journey", "love": ["Open to something new, with no script. An unexpected meeting may happen.", "Lightness and spontaneity. Do something different together; watch out for a lack of commitment.", "A fresh start. You are freer than you think to move on."]}, {"name": "The Magician", "lbl": "I", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 1 of the Fool's Journey", "love": ["You have charm and initiative. Make the first move.", "Time to act for the relationship: suggest, talk, create.", "You have the tools to rebuild yourself. Use them."]}, {"name": "The High Priestess", "lbl": "II", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 1 of the Fool's Journey", "love": ["Hidden feelings, maybe from someone close. Listen to your intuition.", "Something has not been said yet. Watch calmly before you demand answers.", "Turn inward and listen to what you truly feel."]}, {"name": "The Empress", "lbl": "III", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 1 of the Fool's Journey", "love": ["A magnetic, sensual phase. Take care of yourself and love will come.", "Affection, pleasure and care. The relationship blossoms.", "Nurture yourself the way you nurtured them."]}, {"name": "The Emperor", "lbl": "IV", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 1 of the Fool's Journey", "love": ["Attraction to someone stable and protective. Decide what you want.", "Structure and commitment. Watch out for too much control.", "Set clear boundaries and take charge of your life again."]}, {"name": "The Hierophant", "lbl": "V", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 1 of the Fool's Journey", "love": ["Meeting someone in a familiar place, through family or friends. Shared values.", "Formal commitment, marriage, serious plans.", "Go back to your values. Lean on people you trust."]}, {"name": "The Lovers", "lbl": "VI", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 1 of the Fool's Journey", "love": ["A choice of the heart is coming. Strong attraction.", "Choosing each other again, every day. True union.", "A hard choice, made according to what you value."]}, {"name": "The Chariot", "lbl": "VII", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 1 of the Fool's Journey", "love": ["Go after it. Get out there, mingle, take the initiative.", "The relationship moves forward: a change, a trip, the next step.", "Move ahead with focus. Do not look back now."]}, {"name": "Strength", "lbl": "VIII", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 2 of the Fool's Journey", "love": ["Self-confidence is attractive. Be yourself, no rush.", "Patience and tenderness win over the crisis.", "You are stronger than this pain."]}, {"name": "The Hermit", "lbl": "IX", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 2 of the Fool's Journey", "love": ["Time alone to know yourself before getting involved.", "Each of you needs some space. Respect that.", "Pulling back right now is healing, not loneliness."]}, {"name": "Wheel of Fortune", "lbl": "X", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 2 of the Fool's Journey", "love": ["A twist: someone shows up when you least expect it.", "A new phase in the relationship, for the better or for a change.", "The cycle has turned. What comes next is different from what was."]}, {"name": "Justice", "lbl": "XI", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 2 of the Fool's Journey", "love": ["You attract what you offer. Be clear about what you want.", "Balance between the two of you. Emotional accounts settled.", "Each one reaps what they sowed. Close open issues honestly."]}, {"name": "The Hanged Man", "lbl": "XII", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 2 of the Fool's Journey", "love": ["Waiting. Change the way you look or the way you search.", "A stalled relationship. A new point of view gets it moving.", "Still in limbo. Stop forcing an answer."]}, {"name": "Death", "lbl": "XIII", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 2 of the Fool's Journey", "love": ["The end of an old pattern in how you choose partners.", "One phase ends so another can be born. Transformation.", "The ending is real. Let go so something new can be born."]}, {"name": "Temperance", "lbl": "XIV", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 2 of the Fool's Journey", "love": ["Calm. A love that is built slowly.", "Harmony and adjustment. Both sides giving a little.", "Gradual healing. One day at a time."]}, {"name": "The Devil", "lbl": "XV", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 3 of the Fool's Journey", "love": ["Intense attraction, but be careful with what binds you.", "Strong passion or dependence. See what is a choice and what is a chain.", "Still tied by attachment or desire. The chains are loose."]}, {"name": "The Tower", "lbl": "XVI", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 3 of the Fool's Journey", "love": ["A surprise shakes your certainties about love.", "Crisis or revelation. What is false falls apart.", "A sudden break. Painful, but freeing."]}, {"name": "The Star", "lbl": "XVII", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 3 of the Fool's Journey", "love": ["Hope. Open yourself to love again.", "A phase of renewal and caring for each other.", "Healing and faith in the future. You will love again."]}, {"name": "The Moon", "lbl": "XVIII", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 3 of the Fool's Journey", "love": ["Illusions and fantasies. Do not idealize someone you just met.", "Insecurity, jealousy or something hidden. Talk before you imagine.", "Confusion and longing. Wait for the fog to lift before deciding."]}, {"name": "The Sun", "lbl": "XIX", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 3 of the Fool's Journey", "love": ["Joy, a light and true love on its way.", "Happiness, closeness, love returned.", "You smile again. The best is ahead."]}, {"name": "Judgement", "lbl": "XX", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 3 of the Fool's Journey", "love": ["A second chance, maybe with someone from the past.", "Renewing vows, forgiving, starting over together.", "Time to forgive yourself and listen to what you learned."]}, {"name": "The World", "lbl": "XXI", "sym": "✦", "group": "Major", "keys": "Major Arcana · Act 3 of the Fool's Journey", "love": ["You are whole. The right love finds people who feel complete on their own.", "A mature and complete relationship. A cycle fulfilled.", "A cycle fully closed. You are ready for the next one."]}, {"name": "Ace of Cups", "lbl": "Ace", "sym": "♥", "group": "Cups", "keys": "Ace = beginning · Cups = emotions", "love": ["A new feeling beginning. An open heart.", "Renewed affection, a new emotional beginning.", "Your heart is ready to open again, first to yourself."]}, {"name": "Two of Cups", "lbl": "2", "sym": "♥", "group": "Cups", "keys": "2 = choice · Cups = emotions", "love": ["A mutual connection. Someone who chooses you too.", "A true partnership, both of you in tune.", "A chance of reconciliation or of peace between you."]}, {"name": "Three of Cups", "lbl": "3", "sym": "♥", "group": "Cups", "keys": "3 = growth · Cups = emotions", "love": ["Fun, friends, a meeting born out of joy.", "Celebrate together. Bring lightness back.", "Lean on your friends. There is life and joy outside the relationship."]}, {"name": "Four of Cups", "lbl": "4", "sym": "♥", "group": "Cups", "keys": "4 = stability · Cups = emotions", "love": ["Disinterest, or not noticing who is getting closer.", "Boredom or complacency. Look at each other again.", "Apathy. Be careful not to close doors out of exhaustion."]}, {"name": "Five of Cups", "lbl": "5", "sym": "♥", "group": "Cups", "keys": "5 = conflict · Cups = emotions", "love": ["A recent disappointment that still hurts.", "Hurt between you. Look at what is still standing.", "Grieving the relationship. Feel it, but remember what remains."]}, {"name": "Six of Cups", "lbl": "6", "sym": "♥", "group": "Cups", "keys": "6 = harmony · Cups = emotions", "love": ["Nostalgia, someone from the past may reappear.", "Tenderness and good memories. Relive the beginning.", "Missing them. Remember the good without idealizing the past."]}, {"name": "Seven of Cups", "lbl": "7", "sym": "♥", "group": "Cups", "keys": "7 = evaluation · Cups = emotions", "love": ["Many options and idealization. See who the person really is.", "Fantasies about the relationship. Separate dream from reality.", "Imagining how it could have been. Come back to what is real."]}, {"name": "Eight of Cups", "lbl": "8", "sym": "♥", "group": "Cups", "keys": "8 = movement · Cups = emotions", "love": ["Leaving behind what no longer feeds you.", "One of you feels like leaving. Talk honestly.", "Walking away was the right step. Keep searching for more."]}, {"name": "Nine of Cups", "lbl": "9", "sym": "♥", "group": "Cups", "keys": "9 = almost there · Cups = emotions", "love": ["Satisfaction. A love wish may come true.", "Contentment, the relationship feels good.", "You feel good with yourself. Enjoy it."]}, {"name": "Ten of Cups", "lbl": "10", "sym": "♥", "group": "Cups", "keys": "10 = end of cycle · Cups = emotions", "love": ["Complete happiness, the dream of family and home.", "Mature love, a happy home, plans for the future.", "The happiness you are looking for is possible. Do not give up on it."]}, {"name": "Page of Cups", "lbl": "Page", "sym": "♥", "group": "Cups", "keys": "Page learns · Cups = emotions", "love": ["A romantic invitation, someone sweet coming closer.", "A loving gesture, a love note.", "A loving message, maybe from your ex. Listen calmly."]}, {"name": "Knight of Cups", "lbl": "Knight", "sym": "♥", "group": "Cups", "keys": "Knight acts · Cups = emotions", "love": ["A declaration, someone charming.", "Romance, a special proposal.", "An offer to get back together. Keep your feet on the ground."]}, {"name": "Queen of Cups", "lbl": "Queen", "sym": "♥", "group": "Cups", "keys": "Queen feels · Cups = emotions", "love": ["Sharp intuition in love.", "A warm and understanding love.", "Comfort yourself the way you would comfort a friend."]}, {"name": "King of Cups", "lbl": "King", "sym": "♥", "group": "Cups", "keys": "King leads · Cups = emotions", "love": ["Someone mature and emotionally stable.", "A balanced, understanding partner.", "Emotional balance coming back."]}, {"name": "Ace of Wands", "lbl": "Ace", "sym": "♣", "group": "Wands", "keys": "Ace = beginning · Wands = action", "love": ["Strong attraction, passion being born.", "Renewed desire, fire between you.", "New energy to live. Do something for yourself."]}, {"name": "Two of Wands", "lbl": "2", "sym": "♣", "group": "Wands", "keys": "2 = choice · Wands = action", "love": ["Thinking about what you want in love. Make a plan.", "Deciding the future of the relationship together.", "Time to plan your life from here on."]}, {"name": "Three of Wands", "lbl": "3", "sym": "♣", "group": "Wands", "keys": "3 = growth · Wands = action", "love": ["Interest that may come from far away. Widen your horizons.", "The relationship is growing, maybe long distance.", "Look ahead. New horizons are opening."]}, {"name": "Four of Wands", "lbl": "4", "sym": "♣", "group": "Wands", "keys": "4 = stability · Wands = action", "love": ["Celebration, meeting someone at a party or an event.", "Celebration, engagement, moving in together.", "Come home, to yourself and to the people who embrace you."]}, {"name": "Five of Wands", "lbl": "5", "sym": "♣", "group": "Wands", "keys": "5 = conflict · Wands = action", "love": ["A confusing game of chasing and rivalry.", "Small fights, competition between you.", "Arguments still echoing. Choose not to feed them."]}, {"name": "Six of Wands", "lbl": "6", "sym": "♣", "group": "Wands", "keys": "6 = harmony · Wands = action", "love": ["You feel desired and valued.", "Pride in the relationship, mutual admiration.", "You won this phase. Recognize your strength."]}, {"name": "Seven of Wands", "lbl": "7", "sym": "♣", "group": "Wands", "keys": "7 = evaluation · Wands = action", "love": ["Defending your boundaries with someone insistent.", "Protecting the relationship from interference.", "Stay firm so you do not go back to what hurt you."]}, {"name": "Eight of Wands", "lbl": "8", "sym": "♣", "group": "Wands", "keys": "8 = movement · Wands = action", "love": ["Messages, invitations, things speeding up.", "Quick news, a trip, things moving fast.", "News or contact from your ex. Think before you reply."]}, {"name": "Nine of Wands", "lbl": "9", "sym": "♣", "group": "Wands", "keys": "9 = almost there · Wands = action", "love": ["Afraid of getting hurt again.", "Tired, but still wanting to keep going.", "Still on the defensive. You are almost through this."]}, {"name": "Ten of Wands", "lbl": "10", "sym": "♣", "group": "Wands", "keys": "10 = end of cycle · Wands = action", "love": ["Asking too much of yourself to be loved.", "Carrying the relationship alone. Share the weight.", "The weight of the relationship stayed with you. Let it go."]}, {"name": "Page of Wands", "lbl": "Page", "sym": "♣", "group": "Wands", "keys": "Page learns · Wands = action", "love": ["Lively flirting.", "Enthusiasm and novelty.", "A wish to go on an adventure again."]}, {"name": "Knight of Wands", "lbl": "Knight", "sym": "♣", "group": "Wands", "keys": "Knight acts · Wands = action", "love": ["Intense passion, maybe a passing one.", "Impulse, travel, an adventure for two.", "Be careful with impulsive decisions."]}, {"name": "Queen of Wands", "lbl": "Queen", "sym": "♣", "group": "Wands", "keys": "Queen feels · Wands = action", "love": ["Self-esteem is high. You are magnetic.", "Charisma and passion.", "Your glow is back. Let yourself be seen."]}, {"name": "King of Wands", "lbl": "King", "sym": "♣", "group": "Wands", "keys": "King leads · Wands = action", "love": ["Someone decisive and protective.", "A partner who leads and inspires.", "Take charge of your life."]}, {"name": "Ace of Swords", "lbl": "Ace", "sym": "♠", "group": "Swords", "keys": "Ace = beginning · Swords = thoughts", "love": ["Clarity about what you want in a relationship.", "An honest talk that clears everything up.", "The truth comes out and sets you free."]}, {"name": "Two of Swords", "lbl": "2", "sym": "♠", "group": "Swords", "keys": "2 = choice · Swords = thoughts", "love": ["Undecided between people or paths.", "Avoiding an important conversation.", "Sitting on the fence. Take off the blindfold and look at the facts."]}, {"name": "Three of Swords", "lbl": "3", "sym": "♠", "group": "Swords", "keys": "3 = growth · Swords = thoughts", "love": ["Hurt from past loves still present.", "Betrayal, pain or a truth that hurts.", "A broken heart. The pain is real and it will pass."]}, {"name": "Four of Swords", "lbl": "4", "sym": "♠", "group": "Swords", "keys": "4 = stability · Swords = thoughts", "love": ["A pause from love to pull yourself together.", "Taking a break to breathe.", "Rest. You do not have to solve everything right now."]}, {"name": "Five of Swords", "lbl": "5", "sym": "♠", "group": "Swords", "keys": "5 = conflict · Swords = thoughts", "love": ["Games and pride in the chase.", "An argument where both of you lose.", "A final fight with a bitter taste. Is winning worth it?"]}, {"name": "Six of Swords", "lbl": "6", "sym": "♠", "group": "Swords", "keys": "6 = harmony · Swords = thoughts", "love": ["Leaving a pattern of pain behind.", "Leaving a rough phase together.", "Heading toward calmer waters."]}, {"name": "Seven of Swords", "lbl": "7", "sym": "♠", "group": "Swords", "keys": "7 = evaluation · Swords = thoughts", "love": ["Someone may not be honest with you.", "Secrets or something left unsaid.", "Watch out for mind games. Protect yourself."]}, {"name": "Eight of Swords", "lbl": "8", "sym": "♠", "group": "Swords", "keys": "8 = movement · Swords = thoughts", "love": ["Trapped by fears that keep you from getting involved.", "Feeling there is no way out in the relationship.", "Stuck in the past by your own thoughts. The ties are loose."]}, {"name": "Nine of Swords", "lbl": "9", "sym": "♠", "group": "Swords", "keys": "9 = almost there · Swords = thoughts", "love": ["Anxiety: 'what if no one ever loves me?'", "Jealousy, fear of losing them, sleepless nights.", "Replaying the breakup. The fear is bigger than the facts."]}, {"name": "Ten of Swords", "lbl": "10", "sym": "♠", "group": "Swords", "keys": "10 = end of cycle · Swords = thoughts", "love": ["Emotional rock bottom. A new day is dawning.", "An ending with no way back, or a crisis that closes a cycle.", "It is over for good. The worst is behind you."]}, {"name": "Page of Swords", "lbl": "Page", "sym": "♠", "group": "Swords", "keys": "Page learns · Swords = thoughts", "love": ["Distrust, conversations over text.", "Watch before you speak.", "Checking up on your ex too much. Stop looking at their profile."]}, {"name": "Knight of Swords", "lbl": "Knight", "sym": "♠", "group": "Swords", "keys": "Knight acts · Swords = thoughts", "love": ["Someone direct and impulsive.", "A quick argument.", "Rushing to resolve things. Breathe."]}, {"name": "Queen of Swords", "lbl": "Queen", "sym": "♠", "group": "Swords", "keys": "Queen feels · Swords = thoughts", "love": ["Clear boundaries, you know what you do not want.", "Telling the truth firmly.", "Independence and clarity."]}, {"name": "King of Swords", "lbl": "King", "sym": "♠", "group": "Swords", "keys": "King leads · Swords = thoughts", "love": ["Someone rational and cold.", "A well thought out decision about the relationship.", "Decide with your head."]}, {"name": "Ace of Pentacles", "lbl": "Ace", "sym": "◆", "group": "Pentacles", "keys": "Ace = beginning · Pentacles = material", "love": ["Serious, real interest with a future.", "A solid foundation, building something concrete.", "A practical fresh start: take care of your life and your wallet."]}, {"name": "Two of Pentacles", "lbl": "2", "sym": "◆", "group": "Pentacles", "keys": "2 = choice · Pentacles = material", "love": ["Balancing love with a busy routine.", "Balancing the relationship, work and bills.", "Juggling everything. Take it slow."]}, {"name": "Three of Pentacles", "lbl": "3", "sym": "◆", "group": "Pentacles", "keys": "3 = growth · Pentacles = material", "love": ["Building something with someone from work or a project.", "Building the relationship together, with dedication.", "Rebuilding yourself little by little, with help."]}, {"name": "Four of Pentacles", "lbl": "4", "sym": "◆", "group": "Pentacles", "keys": "4 = stability · Pentacles = material", "love": ["Closed off out of fear of losing.", "Possessiveness, attachment or control.", "Holding on to what is gone. Let it go."]}, {"name": "Five of Pentacles", "lbl": "5", "sym": "◆", "group": "Pentacles", "keys": "5 = conflict · Pentacles = material", "love": ["Loneliness, feeling left out.", "Hardship, maybe financial, affecting the relationship.", "A feeling of lack. Ask for help, it is close."]}, {"name": "Six of Pentacles", "lbl": "6", "sym": "◆", "group": "Pentacles", "keys": "6 = harmony · Pentacles = material", "love": ["Generosity, giving and receiving.", "A fair and balanced exchange.", "Be generous with yourself."]}, {"name": "Seven of Pentacles", "lbl": "7", "sym": "◆", "group": "Pentacles", "keys": "7 = evaluation · Pentacles = material", "love": ["Patience. The right love takes time.", "A relationship maturing slowly.", "Looking back at what was worth it."]}, {"name": "Eight of Pentacles", "lbl": "8", "sym": "◆", "group": "Pentacles", "keys": "8 = movement · Pentacles = material", "love": ["Working on yourself before getting involved.", "Taking care of the relationship day to day.", "Focus on yourself, your studies and your work."]}, {"name": "Nine of Pentacles", "lbl": "9", "sym": "◆", "group": "Pentacles", "keys": "9 = almost there · Pentacles = material", "love": ["Happy on your own, independent and fulfilled.", "Comfort and security together.", "You are whole on your own."]}, {"name": "Ten of Pentacles", "lbl": "10", "sym": "◆", "group": "Pentacles", "keys": "10 = end of cycle · Pentacles = material", "love": ["Thinking about family and home.", "Serious commitment, building a home.", "Go back to your roots and your family."]}, {"name": "Page of Pentacles", "lbl": "Page", "sym": "◆", "group": "Pentacles", "keys": "Page learns · Pentacles = material", "love": ["Serious and careful interest.", "Learning together, practical plans.", "Learning from what you lived."]}, {"name": "Knight of Pentacles", "lbl": "Knight", "sym": "◆", "group": "Pentacles", "keys": "Knight acts · Pentacles = material", "love": ["Someone loyal, slow and steady.", "Consistency and routine.", "One step at a time."]}, {"name": "Queen of Pentacles", "lbl": "Queen", "sym": "◆", "group": "Pentacles", "keys": "Queen feels · Pentacles = material", "love": ["Taking care of yourself attracts someone who takes care of you.", "A love that cares for the home and for well-being.", "Take care of your body and your home."]}, {"name": "King of Pentacles", "lbl": "King", "sym": "◆", "group": "Pentacles", "keys": "King leads · Pentacles = material", "love": ["Someone stable and a provider.", "Security and comfort.", "Build a secure life for yourself."]}], "spreads": [{"id": "momento", "name": "Where the relationship stands", "desc": "To understand where you two are.", "pos": ["How I am", "How the relationship is", "What needs attention"]}, {"id": "dois", "name": "What each of you brings", "desc": "To see what each side puts into the relationship.", "pos": ["What I bring", "What the other person brings", "What unites us", "What pulls us apart"]}, {"id": "trava", "name": "What is holding you back", "desc": "For when something is not moving.", "pos": ["The block", "Where it comes from", "How to unblock it"]}, {"id": "insistir", "name": "Is it worth fighting for?", "desc": "For hard decisions.", "pos": ["What I have today", "What I gain by staying", "What I gain by leaving", "What my heart needs"]}, {"id": "novo", "name": "Getting to know someone new", "desc": "For the first dates.", "pos": ["What attracts me", "What to watch", "How to move forward"]}, {"id": "termino", "name": "After the breakup", "desc": "To get through the ending.", "pos": ["The lesson that stays", "What I need to let go", "What lies ahead"]}, {"id": "proprio", "name": "Self-love", "desc": "To look at yourself.", "pos": ["How I treat myself", "What I deserve", "One act of self-care for today"]}], "combos": [["The Lovers + Two of Cups", "True union, a mutual choice. One of the strongest love combinations."], ["The Sun + Ten of Cups", "Happiness and home. A relationship that works and feels good."], ["The Tower + Three of Swords", "A painful revelation. A truth comes out and it hurts."], ["The Devil + The Lovers", "Intense passion that can turn into dependence. See if it is a choice or a chain."], ["The Moon + Seven of Swords", "Something hidden. Be wary and talk before you jump to conclusions."], ["The Hierophant + Four of Wands", "Commitment, marriage, celebrating with family."], ["Death + Six of Swords", "An ending and a transition. A page turns and you head to calmer waters."], ["The Star + Ace of Cups", "Healing and a new love being born."], ["Judgement + Six of Cups", "Someone from the past returns, or a second chance."], ["The Hermit + Four of Swords", "Time to be alone and recover before loving again."], ["Knight of Cups + Ace of Cups", "A declaration or a romantic proposal on its way."], ["Five of Cups + Eight of Cups", "A disappointment that leads to the decision to leave."], ["Queen of Cups + King of Cups", "A mature, emotionally balanced couple."], ["Nine of Swords + The Moon", "Anxiety and imagination bigger than reality."], ["The Empress + Ace of Pentacles", "Fertility, pregnancy or building a family."], ["Two of Swords + The Lovers", "Torn between two people or two paths."]], "questions": [["Do they love me?", "What is the energy between us and what can I do for this relationship?"], ["Will they come back?", "What do I need to understand about this ending to move on in peace?"], ["When will I meet someone?", "What can I change in myself to live a healthy love?"], ["Are they cheating on me?", "What is making me insecure in this relationship and how can I talk about it?"], ["Will we get married?", "What do we need to build together to take the next step?"], ["Should I end it?", "What do I gain and what do I lose if I stay, and if I go?"]]};
+const SIT = [["solteira","Single"],["relacao","In a relationship"],["termino","Getting over one"]];
+const store = {
+  get(k,d){ try{ const v = localStorage.getItem("tabus_"+k); return v===null?d:JSON.parse(v); }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem("tabus_"+k, JSON.stringify(v)); }catch(e){} }
+};
+const today = () => { const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
+const savedDaily = store.get("daily", null);
+let state = { view:"home", sit: store.get("sit","solteira"), spread:null, drawn:[], flipped:[], daily: (savedDaily && savedDaily.d===today()) ? savedDaily.c : null };
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const sitIdx = () => SIT.findIndex(s => s[0]===state.sit);
+function shuffle(n){ const a=[...Array(D.cards.length).keys()]; const r=new Uint32Array(a.length); try{ crypto.getRandomValues(r); }catch(e){ for(let i=0;i<r.length;i++) r[i]=Math.floor(Math.random()*4294967295); }
+  for(let i=a.length-1;i>0;i--){ const j=r[i]%(i+1); [a[i],a[j]]=[a[j],a[i]]; } return a.slice(0,n); }
+function cardFace(c){ return `<div class="f"><span class="n">${esc(c.lbl)}</span><span class="s">${c.sym}</span><span class="nm">${esc(c.name)}</span></div>`; }
+function cardEl(c, flipped, cls="", attr=""){ return `<div class="tc ${flipped?"flip":""} ${cls}" ${attr}><div class="in"><div class="b">✦</div>${cardFace(c)}</div></div>`; }
+function toast(t){ const el=$("#toast"); el.textContent=t; el.classList.add("on"); setTimeout(()=>el.classList.remove("on"),1800); }
+
+function header(){
+  return `<header><div class="brand"><b>Pocket <em>Love</em></b><span>Tarot</span></div>
+  <div class="sit">${SIT.map(s=>`<button data-sit="${s[0]}" class="${s[0]===state.sit?"on":""}">${s[1]}</button>`).join("")}</div></header>`;
+}
+function home(){
+  const d = state.daily;
+  return `<h1>Hi. What is <em>your heart</em> asking today?</h1>
+  <p class="sub">Choose your situation above. Every reading adjusts to it.</p>
+  <div class="box" style="text-align:center">
+    <h2 style="margin:0 0 4px">Today's love card</h2>
+    <p class="sub" style="font-size:13px">${d!==null ? "Your card for today. Tomorrow you can draw a new one." : "Breathe, think about yourself and tap the card."}</p>
+    <div style="margin-top:16px" id="dailyWrap">${d!==null ? cardEl(D.cards[d], true, "big") : cardEl(D.cards[0], false, "big", 'id="dailyCard"')}</div>
+    ${d!==null ? reading([d],["Today"],true) : ""}
+  </div>
+  <h2>Start here</h2>
+  <div class="list">
+    <button class="item" data-go="spreads"><span class="ic">✦</span><span><b>7 love spreads</b><small>From your relationship to self-love</small></span><span class="ar">›</span></button>
+    <button class="item" data-go="combos"><span class="ic">∞</span><span><b>Love combinations</b><small>Card pairs and what they say together</small></span><span class="ar">›</span></button>
+    <button class="item" data-go="questions"><span class="ic">?</span><span><b>Questions that work</b><small>Swap "does he love me?" for something better</small></span><span class="ar">›</span></button>
+    <button class="item" data-go="cards"><span class="ic">❖</span><span><b>All 78 cards in love</b><small>Search any card</small></span><span class="ar">›</span></button>
+  </div>
+  <p class="foot">Tarot is a tool for reflection and self-knowledge. The decision is always yours.</p>`;
+}
+function reading(ids, positions, noSave, anim){
+  const i = sitIdx();
+  return `<div class="reading">${ids.map((id,k)=>{ const c=D.cards[id];
+    return `<div class="rd" style="${anim&&!anim[k]?"animation:none":""}"><div class="pos">${esc(positions[k])}</div><h3>${esc(c.name)}</h3><div class="keys">${esc(c.keys)}</div><p>${esc(c.love[i])}</p></div>`; }).join("")}</div>`;
+}
+function spreads(){
+  return `<h1>Love <em>spreads</em></h1><p class="sub">Pick the one that fits where you are.</p>
+  <div class="list">${D.spreads.map((s,k)=>`<button class="item" data-spread="${k}"><span class="ic">${s.pos.length}</span><span><b>${esc(s.name)}</b><small>${esc(s.desc)}</small></span><span class="ar">›</span></button>`).join("")}</div>`;
+}
+function spread(){
+  const s = D.spreads[state.spread], n = s.pos.length;
+  const dealt = state.drawn.length>0, allOpen = dealt && state.flipped.every(Boolean);
+  let h = `<button class="sub" data-go="spreads" style="margin-top:16px">‹ Spreads</button><h1 style="margin-top:8px">${esc(s.name)}</h1><p class="sub">${esc(s.desc)} Think of your question while you shuffle.</p>`;
+  if(!dealt){
+    h += `<label>Your question (optional)</label><input id="q" placeholder="Ex.: what can I do for my relationship?" value="${esc(state.q||"")}">
+    <div class="table">${s.pos.map(p=>`<div class="slot">${cardEl(D.cards[0],false)}<small>${esc(p)}</small></div>`).join("")}</div>
+    <button class="btn" id="deal">Shuffle and draw ${n} cards</button>`;
+  } else {
+    h += `<div class="table ${state.justDealt?"deal":""}">${s.pos.map((p,k)=>`<div class="slot">${cardEl(D.cards[state.drawn[k]], state.flipped[k], "", `data-flip="${k}" style="animation-delay:${k*.12}s"`)}<small>${esc(p)}</small></div>`).join("")}</div>`;
+    if(!allOpen) h += `<p class="hint">Tap each card to reveal it.</p>`;
+    const open = state.drawn.map((id,k)=>state.flipped[k]?k:-1).filter(k=>k>=0);
+    if(open.length) h += reading(open.map(k=>state.drawn[k]), open.map(k=>s.pos[k]), false, open.map(k=>k===state.lastOpen));
+    state.justDealt=false;
+    if(allOpen) h += `<label>A note for yourself (optional)</label><textarea id="note" placeholder="What does this reading tell you?"></textarea>
+      <button class="btn" id="save">Save to journal</button><button class="btn ghost" id="again">Draw again</button>`;
+  }
+  return h;
+}
+function cards(){
+  const f = state.filter||"All", q=(state.search||"").toLowerCase();
+  const list = D.cards.map((c,i)=>[c,i]).filter(([c])=>(f==="All"||c.group===f) && (!q || c.name.toLowerCase().includes(q)));
+  return `<h1>All 78 cards <em>in love</em></h1>
+  <input id="search" placeholder="Search a card, ex.: Three of Cups" value="${esc(state.search||"")}">
+  <div class="chips">${["All","Major","Cups","Wands","Swords","Pentacles"].map(g=>`<button data-filter="${g}" class="${g===f?"on":""}">${g}</button>`).join("")}</div>
+  <div class="cl" style="margin-top:8px">${list.map(([c,i])=>`<button class="cardrow" data-card="${i}"><span class="mini">${c.sym}</span><span><b>${esc(c.name)}</b><small>${esc(c.love[sitIdx()].slice(0,70))}${c.love[sitIdx()].length>70?"…":""}</small></span></button>`).join("") || '<p class="hint">No cards found.</p>'}</div>`;
+}
+function combos(){ return `<button class="sub" data-go="home" style="margin-top:16px">‹ Home</button><h1 style="margin-top:8px">Love <em>combinations</em></h1><p class="sub">When these cards come up together in a reading, the message gets stronger.</p>${D.combos.map(c=>`<div class="combo"><b>${esc(c[0])}</b><p>${esc(c[1])}</p></div>`).join("")}`; }
+function questions(){ return `<button class="sub" data-go="home" style="margin-top:16px">‹ Home</button><h1 style="margin-top:8px">Questions that <em>work</em></h1>
+  <div class="box"><b>The 3 rules</b><p style="margin-top:6px">1. Ask about yourself, not about what is in the other person's head.<br>2. Ask "what" and "how", not "if" and "when".<br>3. Ask for a next step: "what can I do…?"</p></div>
+  ${D.questions.map(q=>`<div class="qq"><div class="no">${esc(q[0])}</div><div class="yes">${esc(q[1])}</div></div>`).join("")}`; }
+function diary(){
+  const es = store.get("diary",[]);
+  return `<h1>Your <em>journal</em></h1><p class="sub">Your readings are saved on this device. Read them again from time to time: you will start to see patterns.</p>
+  ${es.length? es.map((e,k)=>`<div class="entry"><button class="del" data-del="${k}">delete</button><div class="d">${esc(e.date)} · ${esc(e.spread)} · ${esc(SIT.find(s=>s[0]===e.sit)?.[1]||"")}</div>${e.q?`<p style="margin-top:4px"><b>${esc(e.q)}</b></p>`:""}<ul>${e.cards.map(c=>`<li><b>${esc(c[0])}:</b> ${esc(c[1])}</li>`).join("")}</ul>${e.note?`<p style="margin-top:6px;color:var(--mut)">${esc(e.note)}</p>`:""}</div>`).join("") : '<div class="box" style="text-align:center"><p>No saved readings yet.</p><button class="btn" data-go="spreads">Do a spread</button></div>'}`;
+}
+function openCard(i){
+  const c=D.cards[i], cur=sitIdx();
+  $("#sheet").innerHTML = `<button class="x" id="close">×</button><div style="clear:both">${cardEl(c,true,"big")}</div><h2 style="text-align:center;margin-top:14px">${esc(c.name)}</h2><p class="keys" style="text-align:center">${esc(c.keys)}</p>
+  ${SIT.map((s,k)=>`<div class="sitrow ${k===cur?"cur":""}"><b>${s[1]}</b><p>${esc(c.love[k])}</p></div>`).join("")}`;
+  $("#modal").classList.add("on");
+}
+function render(){
+  const v = state.view, map = {home, spreads, spread, cards, combos, questions, diary};
+  $("#root").innerHTML = `<div class="app">${header()}${(map[v]||home)()}</div>`;
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on", b.dataset.go===v || (v==="spread"&&b.dataset.go==="spreads") || ((v==="combos"||v==="questions")&&b.dataset.go==="home")));
+  const s=$("#search"); if(s){ s.oninput=()=>{ state.search=s.value; const p=s.selectionStart; render(); const n=$("#search"); n.focus(); n.setSelectionRange(p,p); }; }
+}
+function go(v){ state.view=v; if(v!=="spread"){ state.drawn=[]; state.flipped=[]; } render(); window.scrollTo(0,0); }
+document.addEventListener("click", e=>{
+  const t = e.target.closest("[data-go],[data-sit],[data-spread],[data-flip],[data-card],[data-filter],[data-del],#deal,#save,#again,#dailyCard,#close,#modal");
+  if(!t) return;
+  if(t.id==="modal" && e.target!==t) return;
+  if(t.dataset.go){ go(t.dataset.go); return; }
+  if(t.dataset.sit){ state.sit=t.dataset.sit; store.set("sit",state.sit); render(); return; }
+  if(t.dataset.spread){ state.spread=+t.dataset.spread; state.q=""; go("spread"); return; }
+  if(t.dataset.filter){ state.filter=t.dataset.filter; render(); return; }
+  if(t.dataset.card){ openCard(+t.dataset.card); return; }
+  if(t.dataset.del){ const es=store.get("diary",[]); es.splice(+t.dataset.del,1); store.set("diary",es); render(); return; }
+  if(t.dataset.flip!==undefined){ const k=+t.dataset.flip; if(!state.flipped[k]){ state.flipped[k]=true; state.lastOpen=k; t.classList.add("flip"); setTimeout(render,450); } return; }
+  if(t.id==="deal"){ const q=$("#q"); state.q=q?q.value.trim():""; const n=D.spreads[state.spread].pos.length; state.drawn=shuffle(n); state.flipped=Array(n).fill(false); state.justDealt=true; state.lastOpen=-1; render(); return; }
+  if(t.id==="again"){ state.drawn=[]; state.flipped=[]; render(); return; }
+  if(t.id==="save"){ const s=D.spreads[state.spread], i=sitIdx(); const es=store.get("diary",[]);
+    es.unshift({date:new Date().toLocaleDateString("en-US"), spread:s.name, sit:state.sit, q:state.q||"", note:($("#note")||{}).value||"", cards:state.drawn.map((id,k)=>[s.pos[k], D.cards[id].name])});
+    store.set("diary",es); toast("Saved to your journal ♥"); return; }
+  if(t.id==="dailyCard"){ state.daily=shuffle(1)[0]; store.set("daily",{d:today(),c:state.daily}); t.classList.add("flip"); setTimeout(render,500); return; }
+  if(t.id==="close"||t.id==="modal"){ $("#modal").classList.remove("on"); return; }
+});
+function start(){ document.getElementById("nav").style.display=""; render(); }
+(function gate(){
+  const code=(window.APP_CONFIG||{}).accessCode;
+  if(!code || store.get("ok","")===code){ start(); return; }
+  document.getElementById("nav").style.display="none";
+  $("#root").innerHTML = `<div class="gate"><div style="font-size:34px;color:var(--rose)">♥</div><h1>Pocket <em>Love</em> Tarot</h1><p class="sub">Enter the access code from your email.</p><input id="code" placeholder="Access code" autocomplete="off"><button class="btn" id="enter">Enter</button><p class="hint" id="err"></p></div>`;
+  const tryIt=()=>{ if($("#code").value.trim().toUpperCase()===String(code).toUpperCase()){ store.set("ok",code); start(); } else { $("#err").textContent="Wrong code. Check your purchase email."; } };
+  $("#enter").onclick=tryIt; $("#code").onkeydown=e=>{ if(e.key==="Enter") tryIt(); };
+})();
+</script>
+</body>
+</html>
